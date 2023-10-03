@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/efectn/fiber-boilerplate/internal/bootstrap/database"
 	"github.com/efectn/fiber-boilerplate/app/middleware"
 	"github.com/efectn/fiber-boilerplate/app/router"
+	"github.com/efectn/fiber-boilerplate/internal/bootstrap/database"
 	"github.com/efectn/fiber-boilerplate/utils/config"
 	"github.com/efectn/fiber-boilerplate/utils/response"
 	"github.com/gofiber/fiber/v2"
@@ -50,7 +50,7 @@ func Start(lifecycle fx.Lifecycle, cfg *config.Config, fiber *fiber.App, router 
 					if fiber.Config().Network == "tcp6" {
 						host = "[::1]"
 					} else {
-						host = "0.0.0.0"
+						host = "127.0.0.1"
 					}
 				}
 
