@@ -1,6 +1,8 @@
 package main
 
 import (
+	"runtime"
+
 	"go.uber.org/fx"
 
 	"github.com/efectn/fiber-boilerplate/app/middleware"
@@ -15,6 +17,8 @@ import (
 )
 
 func main() {
+	runtime.GOMAXPROCS(1)
+
 	fx.New(
 		// Provide patterns
 		fx.Provide(config.NewConfig),
