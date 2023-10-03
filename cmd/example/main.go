@@ -26,7 +26,6 @@ func main() {
 
 		// Provide modules
 		article.NewArticleModule,
-
 		// Start Application
 		fx.Invoke(bootstrap.Start),
 
