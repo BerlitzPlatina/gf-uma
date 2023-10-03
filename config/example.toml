@@ -8,10 +8,10 @@ print-routes = true
 prefork = true
 production = false
 
-#[app.tls]
-#enable = false
-#cert-file = "./storage/selfsigned.crt"
-#key-file = "./storage/selfsigned.key"
+[app.tls]
+enable = false
+cert-file = "./storage/selfsigned.crt"
+key-file = "./storage/selfsigned.key"
 
 [db.postgres]
 dsn = "postgresql://postgres:postgres@localhost:5432/boilerplate" # <driver>://<username>:<password>@<host>:<port>/<database>
