@@ -102,8 +102,8 @@ func Start(lifecycle fx.Lifecycle, cfg *config.Config, fiber *fiber.App, router 
 
 				database.ConnectDatabase()
 
-				database.MigrateModels()
-				database.SeedModels()
+				// database.MigrateModels()
+				// database.SeedModels()
 
 				return nil
 			},

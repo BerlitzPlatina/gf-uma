@@ -10,8 +10,9 @@ import (
 	"database/sql"
 
 	"entgo.io/ent/dialect"
-	entsql "entgo.io/ent/dialect/sql"
+	entSql "entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/schema"
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
@@ -36,14 +37,15 @@ func NewDatabase(cfg *config.Config, log zerolog.Logger) *Database {
 }
 
 func (db *Database) ConnectDatabase() {
-	conn, err := sql.Open("pgx", db.Cfg.DB.Postgres.DSN)
+	// conn, err := sql.Open("pgx", db.Cfg.DB.Postgres.DSN)
+	conn, err := sql.Open("mysql", "root:tiger@tcp(127.0.0.1:3306)/docker?parseTime=True")
 	if err != nil {
 		db.Log.Error().Err(err).Msg("An unknown error occurred when to connect the database!")
 	} else {
-		db.Log.Info().Msg("Connected the database succesfully!")
+		db.Log.Info().Msg("Connected the database successfully!")
 	}
 
-	drv := entsql.OpenDB(dialect.Postgres, conn)
+	drv := entSql.OpenDB(dialect.MySQL, conn)
 	db.Ent = ent.NewClient(ent.Driver(drv))
 }
 
