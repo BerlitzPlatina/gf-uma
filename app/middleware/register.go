@@ -8,6 +8,7 @@ import (
 	"github.com/efectn/fiber-boilerplate/utils/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
@@ -57,5 +58,10 @@ func (m *Middleware) Register() {
 
 	m.App.Get(m.Cfg.Middleware.Monitor.Path, monitor.New(monitor.Config{
 		Next: utils.IsEnabled(m.Cfg.Middleware.Monitor.Enable),
+	}))
+
+	m.App.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000, http://127.0.0.1:300",
+    	AllowHeaders:  "*",
 	}))
 }

@@ -50,7 +50,7 @@ func Start(lifecycle fx.Lifecycle, cfg *config.Config, fiber *fiber.App, router 
 					if fiber.Config().Network == "tcp6" {
 						host = "[::1]"
 					} else {
-						host = "127.0.0.1"
+						host = "0.0.0.0"
 					}
 				}
 
