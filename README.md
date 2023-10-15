@@ -1,7 +1,8 @@
 # Fiber Boilerplate
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/efectn/fiber-boilerplate.svg)](https://pkg.go.dev/github.com/efectn/fiber-boilerplate)
 
-Simple and scalable boilerplate to build powerful and organized REST projects with [Fiber](https://github.com/gofiber/fiber). 
+Simple and scalable boilerplate to build powerful and organized REST projects with [Fiber](https://github.com/gofiber/fiber).
 
 ## Directory Structure
 
@@ -71,13 +72,17 @@ Simple and scalable boilerplate to build powerful and organized REST projects wi
 ```
 
 ## Usage
+
 You can run that commands to run project:
 
-```go mod download```
+`go mod download`
 
-```go run cmd/example/main.go``` or ```air -c .air.toml``` if you want to use air
+`go run cmd/example/main.go` or `air -c .air.toml` if you want to use air
+
+`go run -mod=mod entgo.io/ent/cmd/ent new User --target ./app/database/schema`
 
 ### Docker
+
 ```shell
 docker-compose build
 docker-compose up
@@ -86,6 +91,7 @@ CUSTOM="Air" docker-compose up # Use with Air
 ```
 
 ## Tech Stack
+
 - [Go](https://go.dev)
 - [PostgreSQL](https://www.postgresql.org)
 - [Docker](https://www.docker.com/)
@@ -96,6 +102,7 @@ CUSTOM="Air" docker-compose up # Use with Air
 - [GoMock](https://github.com/golang/mock)
 
 ## To-Do List
+
 - [x] More error-free logging.
 - [x] Add makefile to make something shorter.
 - [x] Introduce repository pattern.
@@ -103,4 +110,5 @@ CUSTOM="Air" docker-compose up # Use with Air
 - [x] Add mocking with GoMock.
 
 ## License
+
 fiber-boilerplate is licensed under the terms of the **MIT License** (see [LICENSE](LICENSE)).
