@@ -79,7 +79,8 @@ You can run that commands to run project:
 
 `go run cmd/example/main.go` or `air -c .air.toml` if you want to use air
 
-`go run -mod=mod entgo.io/ent/cmd/ent new User --target ./app/database/schema`
+`go run -mod=mod entgo.io/ent/cmd/ent new User --target ./internal/ent/schema`
+`go run -mod=mod entgo.io/ent/cmd/ent generate ./internal/ent/schema --target ./internal/ent`
 
 ### Docker
 
