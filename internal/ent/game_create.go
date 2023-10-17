@@ -141,10 +141,6 @@ func (gc *GameCreate) defaults() {
 		v := game.DefaultUpdatedAt()
 		gc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := gc.mutation.DeletedAt(); !ok {
-		v := game.DefaultDeletedAt()
-		gc.mutation.SetDeletedAt(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.

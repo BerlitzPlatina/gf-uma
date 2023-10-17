@@ -26,7 +26,7 @@ func (Game) Fields() []ent.Field {
 			UpdateDefault(time.Now),
 		field.Time("deleted_at").
 			Optional().
-			Default(time.Now).
+			// Default(time.Now).
 			UpdateDefault(time.Now),
 	}
 }

@@ -59,8 +59,6 @@ func init() {
 	game.UpdateDefaultUpdatedAt = gameDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// gameDescDeletedAt is the schema descriptor for deleted_at field.
 	gameDescDeletedAt := gameFields[4].Descriptor()
-	// game.DefaultDeletedAt holds the default value on creation for the deleted_at field.
-	game.DefaultDeletedAt = gameDescDeletedAt.Default.(func() time.Time)
 	// game.UpdateDefaultDeletedAt holds the default value on update for the deleted_at field.
 	game.UpdateDefaultDeletedAt = gameDescDeletedAt.UpdateDefault.(func() time.Time)
 }

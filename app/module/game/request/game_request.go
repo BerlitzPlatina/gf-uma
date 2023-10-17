@@ -2,6 +2,6 @@ package request
 
 // Requests & responses for ArticleController & ArticleService
 type GameRequest struct {
-	Title   string `json:"title" form:"title" validate:"required,max=255"`
-	Content string `json:"content" form:"content" validate:"required"`
+	Name string `json:"name" form:"name" validate:"required,max=255"`
+	Icon string `json:"Icon" form:"Icon" validate:"required"`
 }

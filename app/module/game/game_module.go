@@ -40,7 +40,7 @@ func (r *GameRouter) RegisterGameRoutes() {
 
 	// Define routes
 	r.App.Route("/games", func(router fiber.Router) {
-		router.Get("/game/", gameController.Index)
+		router.Get("/", gameController.Index)
 		router.Get("/game/:id", gameController.Show)
 		router.Post("/game/", gameController.Store)
 		router.Patch("/game/:id", gameController.Update)

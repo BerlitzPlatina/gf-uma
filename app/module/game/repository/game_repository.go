@@ -37,15 +37,15 @@ func (s *GameRepository) GetGameByID(id int) (*ent.Game, error) {
 
 func (s *GameRepository) CreateGame(request request.GameRequest) (*ent.Game, error) {
 	return s.DB.Ent.Game.Create().
-		SetName(request.Title).
-		SetIcon(request.Content).
+		SetName(request.Name).
+		SetIcon(request.Icon).
 		Save(context.Background())
 }
 
 func (s *GameRepository) UpdateGame(id int, request request.GameRequest) (*ent.Game, error) {
 	return s.DB.Ent.Game.UpdateOneID(id).
-		SetName(request.Title).
-		SetIcon(request.Content).
+		SetName(request.Name).
+		SetIcon(request.Icon).
 		Save(context.Background())
 }
 
