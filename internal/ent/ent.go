@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/efectn/fiber-boilerplate/internal/ent/article"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -76,6 +77,7 @@ func checkColumn(table, column string) error {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
 			article.Table:  article.ValidColumn,
 			category.Table: category.ValidColumn,
+			game.Table:     game.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

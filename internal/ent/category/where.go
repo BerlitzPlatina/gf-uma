@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/efectn/fiber-boilerplate/internal/ent/predicate"
 )
 
@@ -62,6 +63,11 @@ func Title(v string) predicate.Category {
 // URL applies equality check predicate on the "url" field. It's identical to URLEQ.
 func URL(v string) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldURL, v))
+}
+
+// GameID applies equality check predicate on the "game_id" field. It's identical to GameIDEQ.
+func GameID(v int) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldGameID, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
@@ -209,6 +215,36 @@ func URLContainsFold(v string) predicate.Category {
 	return predicate.Category(sql.FieldContainsFold(FieldURL, v))
 }
 
+// GameIDEQ applies the EQ predicate on the "game_id" field.
+func GameIDEQ(v int) predicate.Category {
+	return predicate.Category(sql.FieldEQ(FieldGameID, v))
+}
+
+// GameIDNEQ applies the NEQ predicate on the "game_id" field.
+func GameIDNEQ(v int) predicate.Category {
+	return predicate.Category(sql.FieldNEQ(FieldGameID, v))
+}
+
+// GameIDIn applies the In predicate on the "game_id" field.
+func GameIDIn(vs ...int) predicate.Category {
+	return predicate.Category(sql.FieldIn(FieldGameID, vs...))
+}
+
+// GameIDNotIn applies the NotIn predicate on the "game_id" field.
+func GameIDNotIn(vs ...int) predicate.Category {
+	return predicate.Category(sql.FieldNotIn(FieldGameID, vs...))
+}
+
+// GameIDIsNil applies the IsNil predicate on the "game_id" field.
+func GameIDIsNil() predicate.Category {
+	return predicate.Category(sql.FieldIsNull(FieldGameID))
+}
+
+// GameIDNotNil applies the NotNil predicate on the "game_id" field.
+func GameIDNotNil() predicate.Category {
+	return predicate.Category(sql.FieldNotNull(FieldGameID))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.Category {
 	return predicate.Category(sql.FieldEQ(FieldCreatedAt, v))
@@ -337,6 +373,29 @@ func DeletedAtIsNil() predicate.Category {
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.Category {
 	return predicate.Category(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// HasCategoryGame applies the HasEdge predicate on the "category_game" edge.
+func HasCategoryGame() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, CategoryGameTable, CategoryGameColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasCategoryGameWith applies the HasEdge predicate on the "category_game" edge with a given conditions (other predicates).
+func HasCategoryGameWith(preds ...predicate.Game) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		step := newCategoryGameStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

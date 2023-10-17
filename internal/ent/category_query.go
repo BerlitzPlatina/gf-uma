@@ -11,16 +11,18 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 	"github.com/efectn/fiber-boilerplate/internal/ent/predicate"
 )
 
 // CategoryQuery is the builder for querying Category entities.
 type CategoryQuery struct {
 	config
-	ctx        *QueryContext
-	order      []category.OrderOption
-	inters     []Interceptor
-	predicates []predicate.Category
+	ctx              *QueryContext
+	order            []category.OrderOption
+	inters           []Interceptor
+	predicates       []predicate.Category
+	withCategoryGame *GameQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -55,6 +57,28 @@ func (cq *CategoryQuery) Unique(unique bool) *CategoryQuery {
 func (cq *CategoryQuery) Order(o ...category.OrderOption) *CategoryQuery {
 	cq.order = append(cq.order, o...)
 	return cq
+}
+
+// QueryCategoryGame chains the current query on the "category_game" edge.
+func (cq *CategoryQuery) QueryCategoryGame() *GameQuery {
+	query := (&GameClient{config: cq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := cq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := cq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(category.Table, category.FieldID, selector),
+			sqlgraph.To(game.Table, game.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, category.CategoryGameTable, category.CategoryGameColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(cq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first Category entity from the query.
@@ -244,15 +268,27 @@ func (cq *CategoryQuery) Clone() *CategoryQuery {
 		return nil
 	}
 	return &CategoryQuery{
-		config:     cq.config,
-		ctx:        cq.ctx.Clone(),
-		order:      append([]category.OrderOption{}, cq.order...),
-		inters:     append([]Interceptor{}, cq.inters...),
-		predicates: append([]predicate.Category{}, cq.predicates...),
+		config:           cq.config,
+		ctx:              cq.ctx.Clone(),
+		order:            append([]category.OrderOption{}, cq.order...),
+		inters:           append([]Interceptor{}, cq.inters...),
+		predicates:       append([]predicate.Category{}, cq.predicates...),
+		withCategoryGame: cq.withCategoryGame.Clone(),
 		// clone intermediate query.
 		sql:  cq.sql.Clone(),
 		path: cq.path,
 	}
+}
+
+// WithCategoryGame tells the query-builder to eager-load the nodes that are connected to
+// the "category_game" edge. The optional arguments are used to configure the query builder of the edge.
+func (cq *CategoryQuery) WithCategoryGame(opts ...func(*GameQuery)) *CategoryQuery {
+	query := (&GameClient{config: cq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	cq.withCategoryGame = query
+	return cq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -331,8 +367,11 @@ func (cq *CategoryQuery) prepareQuery(ctx context.Context) error {
 
 func (cq *CategoryQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Category, error) {
 	var (
-		nodes = []*Category{}
-		_spec = cq.querySpec()
+		nodes       = []*Category{}
+		_spec       = cq.querySpec()
+		loadedTypes = [1]bool{
+			cq.withCategoryGame != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Category).scanValues(nil, columns)
@@ -340,6 +379,7 @@ func (cq *CategoryQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Cat
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Category{config: cq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -351,7 +391,43 @@ func (cq *CategoryQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Cat
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := cq.withCategoryGame; query != nil {
+		if err := cq.loadCategoryGame(ctx, query, nodes, nil,
+			func(n *Category, e *Game) { n.Edges.CategoryGame = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (cq *CategoryQuery) loadCategoryGame(ctx context.Context, query *GameQuery, nodes []*Category, init func(*Category), assign func(*Category, *Game)) error {
+	ids := make([]int, 0, len(nodes))
+	nodeids := make(map[int][]*Category)
+	for i := range nodes {
+		fk := nodes[i].GameID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(game.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "game_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (cq *CategoryQuery) sqlCount(ctx context.Context) (int, error) {
@@ -378,6 +454,9 @@ func (cq *CategoryQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != category.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if cq.withCategoryGame != nil {
+			_spec.Node.AddColumnOnce(category.FieldGameID)
 		}
 	}
 	if ps := cq.predicates; len(ps) > 0 {

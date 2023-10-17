@@ -7,6 +7,7 @@ import (
 
 	"github.com/efectn/fiber-boilerplate/internal/ent/article"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 	"github.com/efectn/fiber-boilerplate/internal/ent/schema"
 )
 
@@ -29,19 +30,37 @@ func init() {
 	categoryFields := schema.Category{}.Fields()
 	_ = categoryFields
 	// categoryDescCreatedAt is the schema descriptor for created_at field.
-	categoryDescCreatedAt := categoryFields[2].Descriptor()
+	categoryDescCreatedAt := categoryFields[3].Descriptor()
 	// category.DefaultCreatedAt holds the default value on creation for the created_at field.
 	category.DefaultCreatedAt = categoryDescCreatedAt.Default.(func() time.Time)
 	// categoryDescUpdatedAt is the schema descriptor for updated_at field.
-	categoryDescUpdatedAt := categoryFields[3].Descriptor()
+	categoryDescUpdatedAt := categoryFields[4].Descriptor()
 	// category.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	category.DefaultUpdatedAt = categoryDescUpdatedAt.Default.(func() time.Time)
 	// category.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	category.UpdateDefaultUpdatedAt = categoryDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// categoryDescDeletedAt is the schema descriptor for deleted_at field.
-	categoryDescDeletedAt := categoryFields[4].Descriptor()
+	categoryDescDeletedAt := categoryFields[5].Descriptor()
 	// category.DefaultDeletedAt holds the default value on creation for the deleted_at field.
 	category.DefaultDeletedAt = categoryDescDeletedAt.Default.(func() time.Time)
 	// category.UpdateDefaultDeletedAt holds the default value on update for the deleted_at field.
 	category.UpdateDefaultDeletedAt = categoryDescDeletedAt.UpdateDefault.(func() time.Time)
+	gameFields := schema.Game{}.Fields()
+	_ = gameFields
+	// gameDescCreatedAt is the schema descriptor for created_at field.
+	gameDescCreatedAt := gameFields[2].Descriptor()
+	// game.DefaultCreatedAt holds the default value on creation for the created_at field.
+	game.DefaultCreatedAt = gameDescCreatedAt.Default.(func() time.Time)
+	// gameDescUpdatedAt is the schema descriptor for updated_at field.
+	gameDescUpdatedAt := gameFields[3].Descriptor()
+	// game.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	game.DefaultUpdatedAt = gameDescUpdatedAt.Default.(func() time.Time)
+	// game.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	game.UpdateDefaultUpdatedAt = gameDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// gameDescDeletedAt is the schema descriptor for deleted_at field.
+	gameDescDeletedAt := gameFields[4].Descriptor()
+	// game.DefaultDeletedAt holds the default value on creation for the deleted_at field.
+	game.DefaultDeletedAt = gameDescDeletedAt.Default.(func() time.Time)
+	// game.UpdateDefaultDeletedAt holds the default value on update for the deleted_at field.
+	game.UpdateDefaultDeletedAt = gameDescDeletedAt.UpdateDefault.(func() time.Time)
 }

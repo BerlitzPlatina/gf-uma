@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 )
 
 // CategoryCreate is the builder for creating a Category entity.
@@ -29,6 +30,20 @@ func (cc *CategoryCreate) SetTitle(s string) *CategoryCreate {
 // SetURL sets the "url" field.
 func (cc *CategoryCreate) SetURL(s string) *CategoryCreate {
 	cc.mutation.SetURL(s)
+	return cc
+}
+
+// SetGameID sets the "game_id" field.
+func (cc *CategoryCreate) SetGameID(i int) *CategoryCreate {
+	cc.mutation.SetGameID(i)
+	return cc
+}
+
+// SetNillableGameID sets the "game_id" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableGameID(i *int) *CategoryCreate {
+	if i != nil {
+		cc.SetGameID(*i)
+	}
 	return cc
 }
 
@@ -72,6 +87,25 @@ func (cc *CategoryCreate) SetNillableDeletedAt(t *time.Time) *CategoryCreate {
 		cc.SetDeletedAt(*t)
 	}
 	return cc
+}
+
+// SetCategoryGameID sets the "category_game" edge to the Game entity by ID.
+func (cc *CategoryCreate) SetCategoryGameID(id int) *CategoryCreate {
+	cc.mutation.SetCategoryGameID(id)
+	return cc
+}
+
+// SetNillableCategoryGameID sets the "category_game" edge to the Game entity by ID if the given value is not nil.
+func (cc *CategoryCreate) SetNillableCategoryGameID(id *int) *CategoryCreate {
+	if id != nil {
+		cc = cc.SetCategoryGameID(*id)
+	}
+	return cc
+}
+
+// SetCategoryGame sets the "category_game" edge to the Game entity.
+func (cc *CategoryCreate) SetCategoryGame(g *Game) *CategoryCreate {
+	return cc.SetCategoryGameID(g.ID)
 }
 
 // Mutation returns the CategoryMutation object of the builder.
@@ -182,6 +216,23 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 	if value, ok := cc.mutation.DeletedAt(); ok {
 		_spec.SetField(category.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = value
+	}
+	if nodes := cc.mutation.CategoryGameIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   category.CategoryGameTable,
+			Columns: []string{category.CategoryGameColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(game.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.GameID = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

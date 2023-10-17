@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 )
 
 // Category is the model entity for the Category schema.
@@ -21,13 +22,40 @@ type Category struct {
 	Title string `json:"title,omitempty"`
 	// URL holds the value of the "url" field.
 	URL string `json:"url,omitempty"`
+	// GameID holds the value of the "game_id" field.
+	GameID int `json:"game_id,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// DeletedAt holds the value of the "deleted_at" field.
-	DeletedAt    time.Time `json:"deleted_at,omitempty"`
+	DeletedAt time.Time `json:"deleted_at,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the CategoryQuery when eager-loading is set.
+	Edges        CategoryEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// CategoryEdges holds the relations/edges for other nodes in the graph.
+type CategoryEdges struct {
+	// CategoryGame holds the value of the category_game edge.
+	CategoryGame *Game `json:"category_game,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// CategoryGameOrErr returns the CategoryGame value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e CategoryEdges) CategoryGameOrErr() (*Game, error) {
+	if e.loadedTypes[0] {
+		if e.CategoryGame == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: game.Label}
+		}
+		return e.CategoryGame, nil
+	}
+	return nil, &NotLoadedError{edge: "category_game"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -35,7 +63,7 @@ func (*Category) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case category.FieldID:
+		case category.FieldID, category.FieldGameID:
 			values[i] = new(sql.NullInt64)
 		case category.FieldTitle, category.FieldURL:
 			values[i] = new(sql.NullString)
@@ -74,6 +102,12 @@ func (c *Category) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				c.URL = value.String
 			}
+		case category.FieldGameID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field game_id", values[i])
+			} else if value.Valid {
+				c.GameID = int(value.Int64)
+			}
 		case category.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
@@ -105,6 +139,11 @@ func (c *Category) Value(name string) (ent.Value, error) {
 	return c.selectValues.Get(name)
 }
 
+// QueryCategoryGame queries the "category_game" edge of the Category entity.
+func (c *Category) QueryCategoryGame() *GameQuery {
+	return NewCategoryClient(c.config).QueryCategoryGame(c)
+}
+
 // Update returns a builder for updating this Category.
 // Note that you need to call Category.Unwrap() before calling this method if this Category
 // was returned from a transaction, and the transaction was committed or rolled back.
@@ -133,6 +172,9 @@ func (c *Category) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("url=")
 	builder.WriteString(c.URL)
+	builder.WriteString(", ")
+	builder.WriteString("game_id=")
+	builder.WriteString(fmt.Sprintf("%v", c.GameID))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(c.CreatedAt.Format(time.ANSIC))

@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/efectn/fiber-boilerplate/internal/ent/category"
+	"github.com/efectn/fiber-boilerplate/internal/ent/game"
 	"github.com/efectn/fiber-boilerplate/internal/ent/predicate"
 )
 
@@ -40,6 +41,26 @@ func (cu *CategoryUpdate) SetURL(s string) *CategoryUpdate {
 	return cu
 }
 
+// SetGameID sets the "game_id" field.
+func (cu *CategoryUpdate) SetGameID(i int) *CategoryUpdate {
+	cu.mutation.SetGameID(i)
+	return cu
+}
+
+// SetNillableGameID sets the "game_id" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableGameID(i *int) *CategoryUpdate {
+	if i != nil {
+		cu.SetGameID(*i)
+	}
+	return cu
+}
+
+// ClearGameID clears the value of the "game_id" field.
+func (cu *CategoryUpdate) ClearGameID() *CategoryUpdate {
+	cu.mutation.ClearGameID()
+	return cu
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (cu *CategoryUpdate) SetUpdatedAt(t time.Time) *CategoryUpdate {
 	cu.mutation.SetUpdatedAt(t)
@@ -58,9 +79,34 @@ func (cu *CategoryUpdate) ClearDeletedAt() *CategoryUpdate {
 	return cu
 }
 
+// SetCategoryGameID sets the "category_game" edge to the Game entity by ID.
+func (cu *CategoryUpdate) SetCategoryGameID(id int) *CategoryUpdate {
+	cu.mutation.SetCategoryGameID(id)
+	return cu
+}
+
+// SetNillableCategoryGameID sets the "category_game" edge to the Game entity by ID if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableCategoryGameID(id *int) *CategoryUpdate {
+	if id != nil {
+		cu = cu.SetCategoryGameID(*id)
+	}
+	return cu
+}
+
+// SetCategoryGame sets the "category_game" edge to the Game entity.
+func (cu *CategoryUpdate) SetCategoryGame(g *Game) *CategoryUpdate {
+	return cu.SetCategoryGameID(g.ID)
+}
+
 // Mutation returns the CategoryMutation object of the builder.
 func (cu *CategoryUpdate) Mutation() *CategoryMutation {
 	return cu.mutation
+}
+
+// ClearCategoryGame clears the "category_game" edge to the Game entity.
+func (cu *CategoryUpdate) ClearCategoryGame() *CategoryUpdate {
+	cu.mutation.ClearCategoryGame()
+	return cu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -127,6 +173,35 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if cu.mutation.DeletedAtCleared() {
 		_spec.ClearField(category.FieldDeletedAt, field.TypeTime)
 	}
+	if cu.mutation.CategoryGameCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   category.CategoryGameTable,
+			Columns: []string{category.CategoryGameColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(game.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := cu.mutation.CategoryGameIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   category.CategoryGameTable,
+			Columns: []string{category.CategoryGameColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(game.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{category.Label}
@@ -159,6 +234,26 @@ func (cuo *CategoryUpdateOne) SetURL(s string) *CategoryUpdateOne {
 	return cuo
 }
 
+// SetGameID sets the "game_id" field.
+func (cuo *CategoryUpdateOne) SetGameID(i int) *CategoryUpdateOne {
+	cuo.mutation.SetGameID(i)
+	return cuo
+}
+
+// SetNillableGameID sets the "game_id" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableGameID(i *int) *CategoryUpdateOne {
+	if i != nil {
+		cuo.SetGameID(*i)
+	}
+	return cuo
+}
+
+// ClearGameID clears the value of the "game_id" field.
+func (cuo *CategoryUpdateOne) ClearGameID() *CategoryUpdateOne {
+	cuo.mutation.ClearGameID()
+	return cuo
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (cuo *CategoryUpdateOne) SetUpdatedAt(t time.Time) *CategoryUpdateOne {
 	cuo.mutation.SetUpdatedAt(t)
@@ -177,9 +272,34 @@ func (cuo *CategoryUpdateOne) ClearDeletedAt() *CategoryUpdateOne {
 	return cuo
 }
 
+// SetCategoryGameID sets the "category_game" edge to the Game entity by ID.
+func (cuo *CategoryUpdateOne) SetCategoryGameID(id int) *CategoryUpdateOne {
+	cuo.mutation.SetCategoryGameID(id)
+	return cuo
+}
+
+// SetNillableCategoryGameID sets the "category_game" edge to the Game entity by ID if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableCategoryGameID(id *int) *CategoryUpdateOne {
+	if id != nil {
+		cuo = cuo.SetCategoryGameID(*id)
+	}
+	return cuo
+}
+
+// SetCategoryGame sets the "category_game" edge to the Game entity.
+func (cuo *CategoryUpdateOne) SetCategoryGame(g *Game) *CategoryUpdateOne {
+	return cuo.SetCategoryGameID(g.ID)
+}
+
 // Mutation returns the CategoryMutation object of the builder.
 func (cuo *CategoryUpdateOne) Mutation() *CategoryMutation {
 	return cuo.mutation
+}
+
+// ClearCategoryGame clears the "category_game" edge to the Game entity.
+func (cuo *CategoryUpdateOne) ClearCategoryGame() *CategoryUpdateOne {
+	cuo.mutation.ClearCategoryGame()
+	return cuo
 }
 
 // Where appends a list predicates to the CategoryUpdate builder.
@@ -275,6 +395,35 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 	}
 	if cuo.mutation.DeletedAtCleared() {
 		_spec.ClearField(category.FieldDeletedAt, field.TypeTime)
+	}
+	if cuo.mutation.CategoryGameCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   category.CategoryGameTable,
+			Columns: []string{category.CategoryGameColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(game.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := cuo.mutation.CategoryGameIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   category.CategoryGameTable,
+			Columns: []string{category.CategoryGameColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(game.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Category{config: cuo.config}
 	_spec.Assign = _node.assignValues

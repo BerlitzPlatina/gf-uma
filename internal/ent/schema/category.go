@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -17,6 +18,8 @@ func (Category) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("title"),
 		field.String("url"),
+		field.Int("game_id").
+            Optional(),
 		field.Time("created_at").
 			Default(time.Now).
 			Immutable(),
@@ -32,5 +35,10 @@ func (Category) Fields() []ent.Field {
 
 // Edges of the Category.
 func (Category) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+        edge.From("category_game", Game.Type).
+            Ref("game_category").
+            Unique().
+            Field("game_id"),
+    }
 }
