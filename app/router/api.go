@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/BerlitzPlatina/gf-uma/app/module/article"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game"
 	"github.com/BerlitzPlatina/gf-uma/storage"
 	"github.com/gofiber/fiber/v2"
 )
@@ -9,12 +10,14 @@ import (
 type Router struct {
 	App           fiber.Router
 	ArticleRouter *article.ArticleRouter
+	GameRouter    *game.GameRouter
 }
 
-func NewRouter(fiber *fiber.App, articleRouter *article.ArticleRouter) *Router {
+func NewRouter(fiber *fiber.App, articleRouter *article.ArticleRouter, gameRouter *game.GameRouter) *Router {
 	return &Router{
 		App:           fiber,
 		ArticleRouter: articleRouter,
+		GameRouter:    gameRouter,
 	}
 }
 
@@ -37,4 +40,5 @@ func (r *Router) Register() {
 
 	// Register routes of modules
 	r.ArticleRouter.RegisterArticleRoutes()
+	r.GameRouter.RegisterGameRoutes()
 }

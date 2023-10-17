@@ -25,15 +25,15 @@ func (Game) Fields() []ent.Field {
 			Default(time.Now).
 			UpdateDefault(time.Now),
 		field.Time("deleted_at").
-		Optional().
-		Default(time.Now).
-		UpdateDefault(time.Now),
+			Optional().
+			Default(time.Now).
+			UpdateDefault(time.Now),
 	}
 }
 
 // Edges of the Game.
 func (Game) Edges() []ent.Edge {
 	return []ent.Edge{
-        edge.To("game_category", Category.Type),
-    }
+		edge.To("game_category", Category.Type),
+	}
 }
