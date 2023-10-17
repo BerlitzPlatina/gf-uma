@@ -9,15 +9,15 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/efectn/fiber-boilerplate/internal/ent/migrate"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/efectn/fiber-boilerplate/internal/ent/article"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
 )
 
 // Client is the client that holds all ent builders.

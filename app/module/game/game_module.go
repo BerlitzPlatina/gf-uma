@@ -1,9 +1,9 @@
 package game
 
 import (
-	"github.com/efectn/fiber-boilerplate/app/module/game/controller"
-	"github.com/efectn/fiber-boilerplate/app/module/game/repository"
-	"github.com/efectn/fiber-boilerplate/app/module/game/service"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/controller"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/repository"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/service"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/fx"
 )
@@ -40,10 +40,10 @@ func (r *GameRouter) RegisterGameRoutes() {
 
 	// Define routes
 	r.App.Route("/games", func(router fiber.Router) {
-		router.Get("/", gameController.Index)
-		router.Get("/:id", gameController.Show)
-		router.Post("/", gameController.Store)
-		router.Patch("/:id", gameController.Update)
-		router.Delete("/:id", gameController.Destroy)
+		router.Get("/game/", gameController.Index)
+		router.Get("/game/:id", gameController.Show)
+		router.Post("/game/", gameController.Store)
+		router.Patch("/game/:id", gameController.Update)
+		router.Delete("/game/:id", gameController.Destroy)
 	})
 }

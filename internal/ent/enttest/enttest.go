@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/efectn/fiber-boilerplate/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
 	// required by schema hooks.
-	_ "github.com/efectn/fiber-boilerplate/internal/ent/runtime"
+	_ "github.com/BerlitzPlatina/gf-uma/internal/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/efectn/fiber-boilerplate/internal/ent/migrate"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/migrate"
 )
 
 type (

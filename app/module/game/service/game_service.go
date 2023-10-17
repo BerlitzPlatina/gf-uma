@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/efectn/fiber-boilerplate/app/module/game/repository"
-	"github.com/efectn/fiber-boilerplate/app/module/game/request"
-	"github.com/efectn/fiber-boilerplate/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/repository"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/request"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
 )
 
 type GameService struct {

@@ -11,10 +11,10 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/efectn/fiber-boilerplate/internal/ent/article"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
-	"github.com/efectn/fiber-boilerplate/internal/ent/predicate"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/predicate"
 )
 
 const (

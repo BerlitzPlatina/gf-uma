@@ -1,4 +1,4 @@
-module github.com/efectn/fiber-boilerplate
+module github.com/BerlitzPlatina/gf-uma
 
 go 1.18
 

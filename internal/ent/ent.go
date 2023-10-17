@@ -12,9 +12,9 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/efectn/fiber-boilerplate/internal/ent/article"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
 )
 
 // ent aliases to avoid import conflicts in user's code.

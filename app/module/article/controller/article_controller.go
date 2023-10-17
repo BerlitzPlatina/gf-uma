@@ -3,9 +3,9 @@ package controller
 import (
 	"strconv"
 
-	"github.com/efectn/fiber-boilerplate/app/module/article/request"
-	"github.com/efectn/fiber-boilerplate/app/module/article/service"
-	"github.com/efectn/fiber-boilerplate/utils/response"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article/request"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article/service"
+	"github.com/BerlitzPlatina/gf-uma/utils/response"
 	"github.com/gofiber/fiber/v2"
 )
 

@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/efectn/fiber-boilerplate/app/module/article"
-	"github.com/efectn/fiber-boilerplate/storage"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article"
+	"github.com/BerlitzPlatina/gf-uma/storage"
 	"github.com/gofiber/fiber/v2"
 )
 

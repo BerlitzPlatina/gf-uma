@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/efectn/fiber-boilerplate/app/module/game/service"
+import "github.com/BerlitzPlatina/gf-uma/app/module/game/service"
 
 type Controller struct {
 	Game *GameController

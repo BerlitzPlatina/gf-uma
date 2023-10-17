@@ -3,10 +3,10 @@ package repository
 import (
 	"context"
 
-	"github.com/efectn/fiber-boilerplate/app/module/game/request"
-	"github.com/efectn/fiber-boilerplate/internal/bootstrap/database"
-	"github.com/efectn/fiber-boilerplate/internal/ent"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/app/module/game/request"
+	"github.com/BerlitzPlatina/gf-uma/internal/bootstrap/database"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
 )
 
 type GameRepository struct {

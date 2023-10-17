@@ -3,7 +3,7 @@ package seeds
 import (
 	"context"
 
-	"github.com/efectn/fiber-boilerplate/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
 )
 
 type ArticleSeeder struct{}

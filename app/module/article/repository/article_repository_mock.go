@@ -7,8 +7,8 @@ package repository
 import (
 	reflect "reflect"
 
-	ent "github.com/efectn/fiber-boilerplate/internal/ent"
-	request "github.com/efectn/fiber-boilerplate/app/module/article/request"
+	ent "github.com/BerlitzPlatina/gf-uma/internal/ent"
+	request "github.com/BerlitzPlatina/gf-uma/app/module/article/request"
 	gomock "github.com/golang/mock/gomock"
 )
 

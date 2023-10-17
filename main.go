@@ -5,12 +5,12 @@ import (
 
 	"go.uber.org/fx"
 
-	"github.com/efectn/fiber-boilerplate/app/middleware"
-	"github.com/efectn/fiber-boilerplate/app/module/article"
-	"github.com/efectn/fiber-boilerplate/app/router"
-	"github.com/efectn/fiber-boilerplate/internal/bootstrap"
-	"github.com/efectn/fiber-boilerplate/internal/bootstrap/database"
-	"github.com/efectn/fiber-boilerplate/utils/config"
+	"github.com/BerlitzPlatina/gf-uma/app/middleware"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article"
+	"github.com/BerlitzPlatina/gf-uma/app/router"
+	"github.com/BerlitzPlatina/gf-uma/internal/bootstrap"
+	"github.com/BerlitzPlatina/gf-uma/internal/bootstrap/database"
+	"github.com/BerlitzPlatina/gf-uma/utils/config"
 	fxzerolog "github.com/efectn/fx-zerolog"
 	"github.com/rs/zerolog/log"
 	_ "go.uber.org/automaxprocs"

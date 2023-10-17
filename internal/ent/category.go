@@ -9,8 +9,8 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
 )
 
 // Category is the model entity for the Category schema.

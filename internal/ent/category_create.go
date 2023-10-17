@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
 )
 
 // CategoryCreate is the builder for creating a Category entity.

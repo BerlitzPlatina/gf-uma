@@ -1,6 +1,6 @@
 # Fiber Boilerplate
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/efectn/fiber-boilerplate.svg)](https://pkg.go.dev/github.com/efectn/fiber-boilerplate)
+[![Go Reference](https://pkg.go.dev/badge/github.com/BerlitzPlatina/gf-uma.svg)](https://pkg.go.dev/github.com/BerlitzPlatina/gf-uma)
 
 Simple and scalable boilerplate to build powerful and organized REST projects with [Fiber](https://github.com/gofiber/fiber).
 

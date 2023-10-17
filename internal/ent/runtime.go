@@ -5,10 +5,10 @@ package ent
 import (
 	"time"
 
-	"github.com/efectn/fiber-boilerplate/internal/ent/article"
-	"github.com/efectn/fiber-boilerplate/internal/ent/category"
-	"github.com/efectn/fiber-boilerplate/internal/ent/game"
-	"github.com/efectn/fiber-boilerplate/internal/ent/schema"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/schema"
 )
 
 // The init function reads all schema descriptors with runtime code

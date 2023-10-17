@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/efectn/fiber-boilerplate/app/module/article/repository"
-	"github.com/efectn/fiber-boilerplate/app/module/article/request"
-	"github.com/efectn/fiber-boilerplate/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article/repository"
+	"github.com/BerlitzPlatina/gf-uma/app/module/article/request"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
 )
 
 type ArticleService struct {

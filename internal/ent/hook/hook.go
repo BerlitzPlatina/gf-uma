@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/efectn/fiber-boilerplate/internal/ent"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent"
 )
 
 // The ArticleFunc type is an adapter to allow the use of ordinary

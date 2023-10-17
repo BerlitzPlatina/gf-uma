@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/efectn/fiber-boilerplate/internal/ent/article"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
 )
 
 // Article is the model entity for the Article schema.

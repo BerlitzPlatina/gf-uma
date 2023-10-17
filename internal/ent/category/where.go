@@ -7,7 +7,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/efectn/fiber-boilerplate/internal/ent/predicate"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
