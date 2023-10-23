@@ -18,6 +18,8 @@ type Tx struct {
 	Category *CategoryClient
 	// Game is the client for interacting with the Game builders.
 	Game *GameClient
+	// User is the client for interacting with the User builders.
+	User *UserClient
 
 	// lazily loaded.
 	client     *Client
@@ -152,6 +154,7 @@ func (tx *Tx) init() {
 	tx.Article = NewArticleClient(tx.config)
 	tx.Category = NewCategoryClient(tx.config)
 	tx.Game = NewGameClient(tx.config)
+	tx.User = NewUserClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

@@ -15,6 +15,7 @@ import (
 	"github.com/BerlitzPlatina/gf-uma/internal/ent/article"
 	"github.com/BerlitzPlatina/gf-uma/internal/ent/category"
 	"github.com/BerlitzPlatina/gf-uma/internal/ent/game"
+	"github.com/BerlitzPlatina/gf-uma/internal/ent/user"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -78,6 +79,7 @@ func checkColumn(table, column string) error {
 			article.Table:  article.ValidColumn,
 			category.Table: category.ValidColumn,
 			game.Table:     game.ValidColumn,
+			user.Table:     user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

@@ -8,6 +8,7 @@ import (
 	"github.com/BerlitzPlatina/gf-uma/app/middleware"
 	"github.com/BerlitzPlatina/gf-uma/app/module/article"
 	"github.com/BerlitzPlatina/gf-uma/app/module/game"
+	"github.com/BerlitzPlatina/gf-uma/app/module/user"
 	"github.com/BerlitzPlatina/gf-uma/app/router"
 	"github.com/BerlitzPlatina/gf-uma/internal/bootstrap"
 	"github.com/BerlitzPlatina/gf-uma/internal/bootstrap/database"
@@ -32,6 +33,7 @@ func main() {
 		// Provide modules
 		article.NewArticleModule,
 		game.NewGameModule,
+		user.NewUserModule,
 		// Start Application
 		fx.Invoke(bootstrap.Start),
 
