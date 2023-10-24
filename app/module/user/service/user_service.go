@@ -47,5 +47,9 @@ func (s *UserService) DeleteUser(id int) error {
 
 // auth
 func (s *UserService) Authenticate(request request.LoginRequest) (*ent.User, error) {
-	return s.Repo.GetUserByParams(request)
+	var params ent.User
+	params.Password = request.Password
+	params.Username = request.Username
+
+	return s.Repo.GetUserByParams(params)
 }

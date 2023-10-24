@@ -8,6 +8,7 @@ import (
 	"github.com/BerlitzPlatina/gf-uma/utils/response"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/rs/zerolog/log"
 )
 
 type AuthController struct {
@@ -71,14 +72,28 @@ func (con *AuthController) Authenticate(c *fiber.Ctx) error {
 	if err := response.ParseAndValidate(c, req); err != nil {
 		return err
 	}
+	log.Debug().Msgf("Wtffffff")
 
 	user, err := con.userService.Authenticate(*req)
 	if err != nil {
-		return err
+		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
-	return response.Resp(c, response.Response{
-		Messages: response.Messages{"The user was created successfully!"},
-		Data:     user,
-	})
+	// Create the Claims
+	claims := jwt.MapClaims{
+		"name":  user.Username,
+		"admin": true,
+		"exp":   time.Now().Add(time.Hour * 72).Unix(),
+	}
+
+	// Create token
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	// Generate encoded token and send it as response.
+	t, err := token.SignedString([]byte("secret"))
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	return c.JSON(fiber.Map{"token": t})
 }

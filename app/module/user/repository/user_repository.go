@@ -53,6 +53,9 @@ func (s *UserRepository) DeleteUser(id int) error {
 	return s.DB.Ent.User.DeleteOneID(id).Exec(context.Background())
 }
 
-func (s *UserRepository) GetUserByParams(request request.LoginRequest) (*ent.User, error) {
-	return s.DB.Ent.User.Query().Where(user.Password(request.Password)).First(context.Background())
+func (s *UserRepository) GetUserByParams(params ent.User) (*ent.User, error) {
+	return s.DB.Ent.User.Query().
+		Where(user.Password(params.Username)).
+		Where(user.Password(params.Password)).
+		First(context.Background())
 }
