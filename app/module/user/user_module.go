@@ -46,4 +46,9 @@ func (r *UserRouter) RegisterUserRoutes() {
 		router.Patch("/user/:id", userController.Update)
 		router.Delete("/user/:id", userController.Destroy)
 	})
+
+	authController := r.Controller.Auth
+	r.App.Route("/auth", func(router fiber.Router) {
+		router.Post("/login", authController.Authenticate)
+	})
 }

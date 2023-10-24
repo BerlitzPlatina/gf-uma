@@ -16,6 +16,7 @@ type IUserService interface {
 	CreateUser(request request.UserRequest) (*ent.User, error)
 	UpdateUser(id int, request request.UserRequest) (*ent.User, error)
 	DeleteUser(id int) error
+	Authenticate(id int) error
 }
 
 func NewUserService(repo *repository.UserRepository) *UserService {
@@ -42,4 +43,9 @@ func (s *UserService) UpdateUser(id int, request request.UserRequest) (*ent.User
 
 func (s *UserService) DeleteUser(id int) error {
 	return s.Repo.DeleteUser(id)
+}
+
+// auth
+func (s *UserService) Authenticate(request request.LoginRequest) (*ent.User, error) {
+	return s.Repo.GetUserByParams(request)
 }

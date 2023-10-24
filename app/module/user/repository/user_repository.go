@@ -52,3 +52,7 @@ func (s *UserRepository) UpdateUser(id int, request request.UserRequest) (*ent.U
 func (s *UserRepository) DeleteUser(id int) error {
 	return s.DB.Ent.User.DeleteOneID(id).Exec(context.Background())
 }
+
+func (s *UserRepository) GetUserByParams(request request.LoginRequest) (*ent.User, error) {
+	return s.DB.Ent.User.Query().Where(user.Password(request.Password)).First(context.Background())
+}
